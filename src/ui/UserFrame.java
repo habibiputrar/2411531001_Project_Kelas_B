@@ -12,14 +12,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+
+import DAO.UserRepo;
 import Table.TableUser;
 import model.User;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class UserFrame extends JFrame {
     private static final long serialVersionUID = 1L;
@@ -37,12 +45,18 @@ public class UserFrame extends JFrame {
     private JTable tableUser;
     private TableUser tableModel;
     
+// user repo
+    UserRepo usr = new UserRepo() ;
+    List<User> ls;
+    public String id;
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
                     UserFrame frame = new UserFrame();
                     frame.setVisible(true);
+                    frame.loadTable();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -143,18 +157,52 @@ public class UserFrame extends JFrame {
         formPanel.add(buttonPanel, gbc_buttonPanel);
         
         btnSave = new JButton("Save");
+        btnSave.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		User user = new User();
+        		user.setNama(txtName.getText());
+        		user.setUsername(txtUsername.getText());
+        		user.setPassword(txtPassword.getText());
+        		usr.save(user);
+        		reset();
+        		loadTable();
+        	}
+        });
         btnSave.setPreferredSize(new Dimension(75, 30));
         btnSave.setBackground(new Color(0, 128, 0));
         btnSave.setForeground(new Color(0, 0, 0));
         buttonPanel.add(btnSave);
         
         btnUpdate = new JButton("Update");
+        btnUpdate.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	            User user = new User();
+        	            user.setId(id);
+        	            user.setNama(txtName.getText());
+        	            user.setUsername(txtUsername.getText());
+        	            user.setPassword(txtPassword.getText());
+        	            usr.update(user);  
+        	            reset();
+        	            loadTable();
+        	}
+        });
         btnUpdate.setPreferredSize(new Dimension(75, 30));
         btnUpdate.setBackground(new Color(128, 128, 255));
         btnUpdate.setForeground(new Color(0, 0, 0));
         buttonPanel.add(btnUpdate);
         
         btnDelete = new JButton("Delete");
+        btnDelete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (id != null) {
+                    usr.delete(id);
+                    reset();
+                    loadTable();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Silahkan pilih data yang akan di hapus");
+                }
+            }
+        });
         btnDelete.setPreferredSize(new Dimension(75, 30));
         btnDelete.setBackground(Color.RED);
         btnDelete.setForeground(new Color(0, 0, 0));
@@ -179,11 +227,20 @@ public class UserFrame extends JFrame {
         tableModel = new TableUser(userList);
         
         tableUser = new JTable(tableModel);
+        tableUser.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		id = tableUser.getValueAt(tableUser.getSelectedRow(), 0).toString();
+        		txtName.setText(tableUser.getValueAt(tableUser.getSelectedRow(), 1).toString());
+        		txtUsername.setText(tableUser.getValueAt(tableUser.getSelectedRow(), 2).toString());
+        		txtPassword.setText(tableUser.getValueAt(tableUser.getSelectedRow(), 3).toString());
+        	}
+        });
         tableUser.setBackground(Color.WHITE);
         tableUser.setRowHeight(20);
 
-        tablePanel.add(tableUser.getTableHeader(), BorderLayout.NORTH);
-        tablePanel.add(tableUser, BorderLayout.CENTER);
+        JScrollPane scrollPane = new JScrollPane(tableUser);
+        tablePanel.add(scrollPane, BorderLayout.CENTER);
         
         return tablePanel;
     }
@@ -222,5 +279,19 @@ public class UserFrame extends JFrame {
     
     public TableUser getTableModel() {
         return tableModel;
+    }
+    
+    public void reset() {
+    	txtName.setText("");
+    	txtUsername.setText("");
+    	txtPassword.setText("");
+    }
+    
+    public void loadTable() {
+    	ls = usr.show();
+    	TableUser tu = new TableUser(ls);
+    	tableUser.setModel(tu);
+    	tableUser.getTableHeader().setVisible(true);
+ 	
     }
 }
