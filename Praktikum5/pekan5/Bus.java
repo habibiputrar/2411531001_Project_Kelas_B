@@ -1,44 +1,58 @@
-package pekan5;
+package Pratikum5;
 
 public class Bus extends Kendaraan implements TransportasiUmum {
-    private String kelasBus;
 
-    public Bus(String merk, String model, int tahunProduksi, String kelasBus) {
-        super(merk, model, tahunProduksi);
-        this.kelasBus = kelasBus;
-    }
+ private String kelasBus;
+ private int kapasitas;
 
-    @Override
-    public void nyalakanMesin() {
-        System.out.println("Menyalakan mesin bus dengan memutar kunci kontak besar.");
-    }
+ public Bus(String merk, String model, int tahunProduksi, String kelasBus, int kapasitas) {
+     super(merk, model, tahunProduksi);
+     this.kelasBus = kelasBus;
+     this.kapasitas = kapasitas;
+ }
 
-    @Override
-    public String jenisBahanBakar() {
-        return "Solar";
-    }
+ @Override
+ public void nyalakanMesin() {
+     System.out.println("Nyalakan mesin : Putar kunci untuk menyalakan.");
+ }
 
-    @Override
-    public int kapasitasPenumpang() {
-        return 50;
-    }
+ @Override
+ public String jenisBahanBakar() {
+     return "Solar";
+ }
 
-    public void fiturBus() {
-        System.out.println("Bus memiliki kursi yang dapat direbahkan dan toilet di dalam.");
-    }
+ @Override
+ public int kapasitasPenumpang() {
+     return kapasitas;
+ }
 
-    public class JadwalPerjalanan {
-        private String rute;
-        private String waktuBerangkat;
+ public void fiturBus() {
+     System.out.println("Fitur bus      : Dilengkapi kursi nyaman dan fasilitas hiburan.");
+ }
 
-        public JadwalPerjalanan(String rute, String waktuBerangkat) {
-            this.rute = rute;
-            this.waktuBerangkat = waktuBerangkat;
-        }
+ public class JadwalPerjalanan {
+     private String rute;
+     private String waktuBerangkat;
 
-        public void tampilkanJadwal() {
-            System.out.println("Rute: " + rute);
-            System.out.println("Waktu Berangkat: " + waktuBerangkat);
-        }
-    }
+     public JadwalPerjalanan(String rute, String waktuBerangkat) {
+         this.rute = rute;
+         this.waktuBerangkat = waktuBerangkat;
+     }
+
+     public void tampilkanJadwal() {
+         System.out.println("Jadwal Perjalanan Bus : Rute " + rute + " , Waktu Berangkat  :" + waktuBerangkat);
+        
+     }
+ }
+
+
+ public void tampilkanDetailBus() {
+     tampilkanInfo(); 
+     System.out.println("Kelas Bus          : " + kelasBus);
+     System.out.println("Jenis Bahan Bakar  : " + jenisBahanBakar());
+     System.out.println("Kapasitas Penumpang: " + kapasitasPenumpang());
+ }
+
+
 }
+
