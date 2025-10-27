@@ -1,5 +1,8 @@
-package pekan5;
+package Pratikum5;
 
 public interface TransportasiUdara extends BahanBakar {
     void jenisPenerbangan();
+
+	String namaMaskapai();
+	
 }
