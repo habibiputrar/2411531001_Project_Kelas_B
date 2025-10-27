@@ -1,5 +1,8 @@
-package pekan5;
+package Pratikum5;
 
-public interface Maskapai {
-    String namaMaskapai();
-}
+public class Maskapai {
+	    
+	String namaMaskapai() {
+		return ("Garuda Indonesia");
+	}
+	}
