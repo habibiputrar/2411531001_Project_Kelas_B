@@ -1,5 +1,7 @@
-package pekan5;
+package Pratikum5;
 
-public interface TransportasiUmum extends BahanBakar {
-    int kapasitasPenumpang();
+public interface TransportasiUmum extends BahanBakar{
+	String jenisBahanBakar();
+	int kapasitasPenumpang();
+	
 }
