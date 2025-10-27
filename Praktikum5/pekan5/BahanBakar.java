@@ -1,9 +1,11 @@
-package pekan5;
+package Pratikum5;
 
 public interface BahanBakar {
-    String jenisBahanBakar();
-
-    default void infoKonsumsi() {
-        System.out.println("Konsumsi bahan bakar tergantung kapasitas mesin.");
+	String jenisBahanBakar();
+	
+	default void infoKonsumsi() {
+        System.out.println("Info Konsumsi  : Konsumsi bahan bakar tergantung kapasitas mesin.");
     }
+
+
 }
