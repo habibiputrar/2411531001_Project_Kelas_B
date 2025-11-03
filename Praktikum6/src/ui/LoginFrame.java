@@ -1,0 +1,118 @@
+package ui;
+
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.LayoutStyle.ComponentPlacement;
+
+public class LoginFrame extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JPanel contentPane;
+
+    public JTextField txtUsername;
+    public JTextField txtPassword;
+    public JButton btnLogin;
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(() -> {
+            try {
+                LoginFrame frame = new LoginFrame();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    public LoginFrame() {
+        setTitle("Laundry Apps");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(420, 400);              
+        setLocationRelativeTo(null);  
+        setResizable(false);
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(30, 40, 30, 40));
+        contentPane.setBackground(new Color(230, 230, 230)); 
+        setContentPane(contentPane);
+
+        // Judul
+        JLabel lblTitle = new JLabel("Login Form");
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(Color.BLACK);
+
+        // Username
+        JLabel lblUsername = new JLabel("Username");
+        lblUsername.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblUsername.setForeground(Color.BLACK);
+        
+        txtUsername = new JTextField();
+        txtUsername.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        txtUsername.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(180, 180, 180), 1),
+            BorderFactory.createEmptyBorder(8, 8, 8, 8)
+        ));
+        txtUsername.setBackground(Color.WHITE);
+        txtUsername.setColumns(10);
+
+        // Password
+        JLabel lblPassword = new JLabel("Password");
+        lblPassword.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+        lblPassword.setForeground(Color.BLACK);
+        
+        txtPassword = new JTextField();
+        txtPassword.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        txtPassword.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(180, 180, 180), 1),
+            BorderFactory.createEmptyBorder(8, 8, 8, 8)
+        ));
+        txtPassword.setBackground(Color.WHITE);
+        txtPassword.setColumns(10);
+
+        // Tombol Login (kosong tanpa aksi)
+        btnLogin = new JButton("Login");
+        btnLogin.setBackground(new Color(190, 190, 190)); 
+        btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        btnLogin.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(150, 150, 150), 1),
+            BorderFactory.createEmptyBorder(10, 10, 10, 10)
+        ));
+        btnLogin.setFocusPainted(false);
+
+        // Layout
+        GroupLayout gl = new GroupLayout(contentPane);
+        gl.setHorizontalGroup(
+            gl.createParallelGroup(Alignment.CENTER)
+                .addComponent(lblTitle)
+                .addGroup(gl.createSequentialGroup()
+                    .addGroup(gl.createParallelGroup(Alignment.LEADING)
+                        .addComponent(lblUsername)
+                        .addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblPassword)
+                        .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE))
+                    .addGap(20))
+        );
+
+        gl.setVerticalGroup(
+            gl.createSequentialGroup()
+                .addGap(23)
+                .addComponent(lblTitle)
+                .addGap(29)
+                .addComponent(lblUsername)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(txtUsername, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                .addGap(18)
+                .addComponent(lblPassword)
+                .addPreferredGap(ComponentPlacement.RELATED)
+                .addComponent(txtPassword, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+                .addGap(37)
+                .addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+                .addGap(27)
+        );
+
+        contentPane.setLayout(gl);
+    }
+}
