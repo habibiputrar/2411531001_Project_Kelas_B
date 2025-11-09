@@ -5,6 +5,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import Model.User;
+import Service.LoginService;
+import Util.ValidationUtil;
+import Error.ValidationException;
 
 public class LoginFrame extends JFrame {
 
@@ -71,8 +78,39 @@ public class LoginFrame extends JFrame {
         txtPassword.setBackground(Color.WHITE);
         txtPassword.setColumns(10);
 
-        // Tombol Login (kosong tanpa aksi)
+        // Tombol Login dengan aksi
         btnLogin = new JButton("Login");
+        btnLogin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String userValue = txtUsername.getText();
+                String passValue = txtPassword.getText();
+
+                // Buat objek user
+                User user = new User(userValue, passValue);
+
+                try {
+                    ValidationUtil.validate(user);
+                    LoginService loginService = new LoginService();
+
+                    if (loginService.authenticate(user)) {
+                        System.out.println("Login successful!");
+                        JOptionPane.showMessageDialog(null, "Login berhasil!");
+                        new MainFrame().setVisible(true);
+                        dispose();
+                    } else {
+                        System.out.println("Invalid username or password.");
+                        JOptionPane.showMessageDialog(null, "Login Gagal, Invalid username or password.");
+                    }
+
+                } catch (ValidationException | NullPointerException exception) {
+                    System.out.println("Data tidak valid: " + exception.getMessage());
+                    JOptionPane.showMessageDialog(null, "Login Gagal: " + exception.getMessage());
+                } finally {
+                    System.out.println("Selalu di eksekusi");
+                }
+            }
+        });
+
         btnLogin.setBackground(new Color(190, 190, 190)); 
         btnLogin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         btnLogin.setBorder(BorderFactory.createCompoundBorder(
