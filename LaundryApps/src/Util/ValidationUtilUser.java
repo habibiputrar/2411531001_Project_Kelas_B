@@ -31,7 +31,6 @@ public class ValidationUtilUser {
             throw new ValidationException("Password is blank");
         }
 
-        // Cek duplikasi username & password
         UserRepo repo = new UserRepo();
 
         if (repo.isUsernameExist(user.getUsername())) {
